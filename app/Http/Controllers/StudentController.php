@@ -27,7 +27,6 @@ class StudentController extends Controller
     public function create()
     {
         return view('student.create');
-        //
     }
 
     /**
@@ -75,7 +74,8 @@ class StudentController extends Controller
      */
     public function update(Request $request, student $student)
     {
-        //
+        $student->update($request->all());
+        return $this->index();
     }
 
     /**
@@ -86,6 +86,8 @@ class StudentController extends Controller
      */
     public function destroy(student $student)
     {
+        $student->delete();
+        return $this->index();
         //
     }
 }
