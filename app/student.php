@@ -10,12 +10,15 @@ class student extends Model
     protected $fillable = [
         'name',
         'sex',
-        'birthdate'
+        'birthdate',
+        'group_id'
     ];
+
     public function getFormattedDateAttribute()
     {
         return (new Carbon($this->attributes['birthdate']))->format('d/m/Y');
     }
+
     public function getFormattedSexAttribute()
     {
         switch ($this->attributes['sex']) {
@@ -27,5 +30,9 @@ class student extends Model
                 return 'Feminino';
                 break;
         }
+    }
+    public function group()
+    {
+        return $this->belongsTo('App\Group');
     }
 }

@@ -36,10 +36,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('student.index') }}"> Aluno </a>
+                            <a class="nav-link {{ (request()->segment(1) == 'student') ? 'active' : '' }}" href="{{ route('student.index') }}"> Aluno </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('student.index') }}"> Turmas </a>
+                            <a class="nav-link {{ (request()->segment(1) == 'group') ? 'active' : '' }}" href="{{ route('group.index') }}"> Turmas </a>
                         </li>
                     </ul>
 

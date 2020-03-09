@@ -26,7 +26,7 @@
 
                   <div class="row">
                     <div class="form-group col-sm-8">
-                      <label for="name"> Nome </label>
+                      <label for="name"> Nome: </label>
                       <input type="text" class="form-control" name="name" placeholder="Informe o nome do Aluno" value="{{ isset($registro) ? $registro->name : ''}}" required>
                     </div>
                     <div class="form-group col-sm-4">
@@ -40,10 +40,24 @@
                   </div>
                   <div class="row">
                     <div class="form-group col-sm-4">
-                      <label for="name"> Data de Nascimento </label>
+                      <label for="name"> Data de Nascimento: </label>
                       <input type="date" class="form-control" name="birthdate" placeholder="Informe a data de nascimento do Aluno" value="{{ isset($registro) ? $registro->birthdate : ''}}" required>
                     </div>
+                    @if($groups->count() > 0)
+                    <div class="form-group col-sm-6">
+                      <label for="group_id"> Turma atual: </label>
+                      <select class="form-control" name="group_id">
+                      @if(!isset($registro) )  
+                      <option disabled selected> Selecione a Turma do Aluno </option>
+                      @endif 
+                      <option value="null" {{ isset($registro) && $registro->client_id == null ? 'active' : ''}}> Sem turma </option>
+                        @foreach ($groups as $group)
+                        <option value="{{$group->id}}" {{ isset($registro) && $registro->group_id == $group->id ? 'selected': ''}}> {{$group->description}} </option>
+                        @endforeach
+                      </select>
+                    </div>
                   </div>
+                  @endif
                   <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Salvar</button>
                     <a href="{{route('student.index')}}" class="btn btn-default pull-right">Cancelar</a>

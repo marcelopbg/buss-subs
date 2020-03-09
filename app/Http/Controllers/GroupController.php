@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class GroupController extends Controller
 {
@@ -14,7 +15,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+        $list = Group::paginate(15);
+        return view('group.list', ['registros' => $list]);
     }
 
     /**
@@ -24,7 +26,7 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //
+        return view('group.create');
     }
 
     /**
@@ -35,7 +37,9 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Group::create($request->all());
+        $request->session()->flash('alert-success', 'Turma criada com sucesso!');
+        return $this->index();
     }
 
     /**
@@ -57,6 +61,7 @@ class GroupController extends Controller
      */
     public function edit(group $group)
     {
+        return view('group.create', ['registro' => $group]);
         //
     }
 
@@ -69,7 +74,9 @@ class GroupController extends Controller
      */
     public function update(Request $request, group $group)
     {
-        //
+        $group->update($request->all());
+        $request->session()->flash('alert-success', 'Turma editada com sucesso!');
+        return $this->index();
     }
 
     /**
@@ -80,6 +87,8 @@ class GroupController extends Controller
      */
     public function destroy(group $group)
     {
-        //
+        $group->delete();
+        Session::flash('alert-success', 'Turma removida com sucesso!');
+        return $this->index();
     }
 }

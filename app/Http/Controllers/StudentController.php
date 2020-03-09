@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\student;
+use App\group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+
 
 class StudentController extends Controller
 {
@@ -14,7 +17,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $list = Student::paginate(15);
+        $list = Student::with('group')->paginate(15);
         return view('student.list', ['registros' => $list]);
         //
     }
@@ -26,7 +29,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('student.create');
+        $groups = group::all();
+        return view('student.create', ['groups' => $groups]);
     }
 
     /**
@@ -37,9 +41,10 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         Student::create($request->all());
-        return view('student.create');
-        //
+        $request->session()->flash('alert-success', 'Aluno criado com sucesso!');
+        return $this->index();
     }
 
     /**
@@ -61,7 +66,8 @@ class StudentController extends Controller
      */
     public function edit(student $student)
     {
-        return view('student.create', ['registro' => $student]);
+        $groups = group::all();
+        return view('student.create', ['registro' => $student, 'groups' => $groups]);
         // 
     }
 
@@ -75,6 +81,7 @@ class StudentController extends Controller
     public function update(Request $request, student $student)
     {
         $student->update($request->all());
+        $request->session()->flash('alert-success', 'Aluno editado com sucesso!');
         return $this->index();
     }
 
@@ -87,7 +94,7 @@ class StudentController extends Controller
     public function destroy(student $student)
     {
         $student->delete();
+        Session::flash('alert-success', 'Aluno removido com sucesso!');
         return $this->index();
-        //
     }
 }
