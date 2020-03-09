@@ -19,7 +19,7 @@ class CreateStudentsTable extends Migration
             $table->string('sex');
             $table->date('birthdate');
             $table->unsignedBigInteger('group_id')->nullable();
-            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('set null');;
             $table->timestamps();
         });
     }

@@ -56,8 +56,8 @@
                         @endforeach
                       </select>
                     </div>
-                  </div>
                   @endif
+                  </div>
                   <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Salvar</button>
                     <a href="{{route('student.index')}}" class="btn btn-default pull-right">Cancelar</a>
